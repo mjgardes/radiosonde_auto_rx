@@ -161,6 +161,9 @@ def read_auto_rx_config(filename, no_sdr_test=False):
         # For now, sondehub.org just acts as a proxy to habhub.org.
         # This setting is not exposed to users as it's only used for unit/int testing
         "habitat_url": "https://habitat.sondehub.org/",
+        # New Sondehub DB Settings
+        "sondehub_enabled": True,
+        "sondehub_upload_rate": 30,
     }
 
     try:
@@ -387,6 +390,7 @@ def read_auto_rx_config(filename, no_sdr_test=False):
             "LMS6": True,
             "MK2LMS": False,
             "MEISEI": False,
+            "MRZ": False,
             "UDP": False,
         }
         auto_rx_config["rs41_drift_tweak"] = config.getboolean(
@@ -494,6 +498,21 @@ def read_auto_rx_config(filename, no_sdr_test=False):
                 "Config - Did not find kml_refresh_rate setting, using default (10 seconds)."
             )
             auto_rx_config["kml_refresh_rate"] = 11
+
+        # New Sondehub db Settings
+        try:
+            auto_rx_config["sondehub_enabled"] = config.getboolean(
+                "sondehub", "sondehub_enabled"
+            )
+            auto_rx_config["sondehub_upload_rate"] = config.getint(
+                "sondehub", "sondehub_upload_rate"
+            )
+        except:
+            logging.warning(
+                "Config - Did not find sondehub_enabled setting, using default (enabled / 30 seconds)."
+            )
+            auto_rx_config["sondehub_enabled"] = True
+            auto_rx_config["sondehub_upload_rate"] = 15
 
         # If we are being called as part of a unit test, just return the config now.
         if no_sdr_test:
