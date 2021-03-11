@@ -694,7 +694,7 @@ class SondeDecoder(object):
             if self.sonde_freq > 1000e6:
                 # Use a higher IQ rate for 1680 MHz sondes, at the expense of some CPU usage.
                 _sdr_rate = 96000
-                _ptu_ops = "--ngp"
+                _ptu_ops = "--ngp --ptu"
             else:
                 # On 400 MHz, use 48 khz - RS92s dont drift far enough to need any more than this.
                 _sdr_rate = 48000
