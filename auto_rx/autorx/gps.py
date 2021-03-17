@@ -19,7 +19,7 @@ def get_ephemeris(destination="ephemeris.dat"):
         ftp.login("anonymous", "anonymous")
         ephemeris_time = datetime.datetime.now(
             datetime.timezone.utc
-        ) - datetime.timedelta(hours=18)
+        ) - datetime.timedelta(hours=22)
         ftp.cwd("gnss/data/daily/%s/%s/" % (ephemeris_time.strftime("%Y"),
             ephemeris_time.strftime("%j")))
         # file name should look like YYYY/brdc/brdcDDD0.YYn.Z
